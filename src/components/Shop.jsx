@@ -25,14 +25,12 @@ function Shop(props) {
     }, [setLoading])
 
     const {
-        user:userName,
         time
     } = props
     return (
         <main className="container content">
-            <h3>Shop information {time}</h3>
+            <h3>Shop {time}</h3>
                 <div className='content'>
-                    <h3>Hello { userName }</h3>
                     <h4 className="bg-primary text-white text-center p-2">
                     {!loading? (
                         <GoodList goods={goods}/>

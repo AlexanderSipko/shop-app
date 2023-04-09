@@ -7,7 +7,6 @@ class App extends Component {
   constructor(props) {
       super(props);
       this.state = {
-          userName: "Adam",
           time:'asdf'
     }
   }
@@ -21,7 +20,6 @@ class App extends Component {
     return (
       <div className="App">
         <Shop
-          user={this.state.userName}
           time={this.state.time}
         />
       </div>

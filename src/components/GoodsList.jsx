@@ -4,13 +4,19 @@
 function GoodList(props) {
 
     const {goods = []} = props
-    return (
-        <ul>
-            {goods.map(good => 
-                <GoodItems key={good.id} value={good}/>
+
+    if (goods.lenght) {
+        return <h3>Nothing here</h3>
+    } else {
+        return (
+            <div className="goods">
+                {goods.map(good => 
+                    <GoodItems key={good.id} value={good}/>
                 )}
-        </ul>
-    )
+            </div>
+        )
+    }
+   
 }
 
 export default GoodList
@@ -18,8 +24,22 @@ export default GoodList
 
 function GoodItems(props) {
 
-    const {id, name, description, price} = props.value
+    const {id, name, description, price, full_background} = props.value
     return (
-       <li key={id}>{name} -- {description} -- {price}</li>
+        <div className="card" id={id}>
+                <div className="card-img">
+                    <img width="100%" src={full_background} alt={name} />
+                </div>
+                <div className="card-content">
+                    <p>
+                        {description}
+                    </p> 
+                </div>
+                <div className="card-action">
+                    
+                    <button className="btn">Купить</button>
+                    <span className="right" style={{fontSize:'1.8rem'}} >{price} руб.</span>
+                </div>
+        </div>
     )
 }
