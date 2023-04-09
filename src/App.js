@@ -1,7 +1,6 @@
 
 import React, { Component } from 'react';
 import './App.css';
-import { API_KEY, API_URL } from './config'; 
 import Shop from './components/Shop'
 
 class App extends Component {
@@ -22,8 +21,6 @@ class App extends Component {
     return (
       <div className="App">
         <Shop
-          api_key={API_KEY}
-          api_url={API_URL}
           user={this.state.userName}
           time={this.state.time}
         />
