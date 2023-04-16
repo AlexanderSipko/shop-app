@@ -20,6 +20,31 @@ nav {
   /* background-image: c; */
 }
 
+.cart {
+  display: flex;
+  flex-grow: 1;
+  position: fixed;
+  cursor: pointer;
+  bottom: 4rem;
+  right: 2rem;
+  z-index: 5;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+@media(min-width: 767px){
+  .cart {
+    top: 5rem;
+    bottom: unset;
+  }
+
+}
+
+.cart--quantity {
+  
+}
+
+
 .goods {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
