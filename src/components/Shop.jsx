@@ -4,12 +4,14 @@ import Preloader from './Preloads'
 import GoodList from './GoodsList'
 import { API_KEY, API_URL } from '../config'; 
 import Cart from './Cart'
+import BasketList from './BasketList'
 
 function Shop(props) {
 
-    const [goods, setGoods] = useState([])
-    const {loading, setLoading} = useState(true)
-    const [order, setOrder] = useState([])
+    const [goods, setGoods] = useState([]);
+    const {loading, setLoading} = useState(true);
+    const [order, setOrder] = useState([]);
+    const [isBasketShow, serIsBasketShow] = useState(false);
 
     useEffect(() => {
 
@@ -25,6 +27,23 @@ function Shop(props) {
           .catch(error => console.log('error', error));
             
     }, [setLoading])
+
+
+    const handleBasketShow = () => {
+        // управление состоянием показа корзины
+        serIsBasketShow(!isBasketShow)
+    } 
+
+    const headers = {
+        Authorization:API_KEY
+    }
+    fetch(API_URL, {headers:headers})
+      .then(response => response.json())
+      .then((result) => 
+        {
+            result.featured && setGoods(result.featured);
+        })
+      .catch(error => console.log('error', error));
 
     const addToBasket = (elem) => {
         const itemIndex = order.findIndex(orderItem => orderItem.id === elem.id)
@@ -58,7 +77,8 @@ function Shop(props) {
         <main className="container content">
             <h3>Shop {time}</h3>
                 <div className='content'>
-                    {order? <Cart quantity={order.length}/> : null}
+                    {isBasketShow && <BasketList order={order} handleBasketShow={handleBasketShow}/>}
+                    {order? <Cart quantity={order.length} handleBasketShow={handleBasketShow}/> : null}
                     
                     <h4 className="bg-primary text-white text-center p-2">
                     {!loading? (
