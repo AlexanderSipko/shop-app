@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/AlexanderSipko/shop-app/static/css/main.b5962680.css",
+    "main.js": "/AlexanderSipko/shop-app/static/js/main.20c8e73d.js",
+    "index.html": "/AlexanderSipko/shop-app/index.html",
+    "main.b5962680.css.map": "/AlexanderSipko/shop-app/static/css/main.b5962680.css.map",
+    "main.20c8e73d.js.map": "/AlexanderSipko/shop-app/static/js/main.20c8e73d.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.b5962680.css",
+    "static/js/main.20c8e73d.js"
+  ]
+}
