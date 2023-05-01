@@ -76,8 +76,30 @@ footer {
   left: 1%;
   background-color: aliceblue;
   z-index: 10;
+  animation: show 500ms ease-in-out;
 }
 
 i {
   cursor: pointer;
+}
+
+@keyframes show{
+  from {
+    left: 100%;
+    opacity: 0;
+  }
+
+  to {
+    left: 1%;
+    opacity: 1;
+  }
+}
+
+.btn {
+  margin-right: 15px;
+}
+
+.clearBasket {
+  float: right;
+  margin: 0;
 }

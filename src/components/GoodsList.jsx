@@ -43,7 +43,7 @@ function GoodItems(props) {
                 </div>
                 <div className="card-action">
                     
-                    <button className="btn" onClick={addPosition}>Купить</button>
+                    <button className="btn blue" onClick={addPosition}>Купить</button>
                     <span className="right" style={{fontSize:'1.8rem'}} >{price} руб.</span>
                 </div>
         </div>

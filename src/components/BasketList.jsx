@@ -5,7 +5,7 @@ import BasketItem from './BasketItem'
 function BasketList (props) {
 
     // const [totalPrice, setTotalPrice] = useState(0)
-    const {order=[], handleBasketShow} = props
+    const {order=[], handleBasketShow, removeFromBasket, changeQuantityFromBasket, setOrder} = props
 
     const tPrice = order.reduce((totalPrice, item) => 
             {return totalPrice + item.quantity * item.price}, 0
@@ -20,11 +20,14 @@ function BasketList (props) {
                 </span>
             </li>
             { order.length? order.map(item => 
-                <BasketItem key={item.id} item={item}/>
+                <BasketItem key={item.id} item={item} removeFromBasket={removeFromBasket} changeQuantityFromBasket={changeQuantityFromBasket}/>
             ): <li className="collection-item">Корзина пуста</li>}
             
             {order.length ?
-                <li className="collection-item active blue darken-1">Общая стоимость: {tPrice} руб.</li>:
+            <>
+                <li className="collection-item active blue darken-1">Общая стоимость: {tPrice} руб.</li>
+                <span className="clearBasket waves-effect waves-light btn blue darken-3" onClick={() => setOrder([])}>Очистить корзину</span>
+            </>:
                 null
             }
         </ul>

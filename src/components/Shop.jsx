@@ -70,6 +70,43 @@ function Shop(props) {
         }
     }
 
+    const removeFromBasket = (idElem) => {
+        // убираем улемент из заказа
+        const newOrders = order.filter(item => item.id !== idElem)
+        setOrder(newOrders)
+    }
+
+    const changeQuantityFromBasket = (idElem, plus=true) => {
+        // добавляем количество в заказе
+        const newOrdersIndex = order.findIndex(item => item.id === idElem)
+
+        if (newOrdersIndex<0) {
+            return null
+        } else {
+            const NewOrderList = order.map((item, index) => {
+                if (index === newOrdersIndex) {
+
+                    let newQuantity = item.quantity
+                    plus? newQuantity=newQuantity + 1: newQuantity=newQuantity - 1;
+
+                    return {
+                        ...item,
+                        quantity:newQuantity
+                    }
+                } else {
+                    return item
+                }
+            })
+            setOrder(NewOrderList)
+        }
+        // let changeOrderItem = newOrders[0]
+        // changeOrderItem.quantity += 1
+        // console.log([
+        //     ...order,
+        //     changeOrderItem
+        // ]) 
+    }
+
     const {
         time
     } = props
@@ -77,7 +114,13 @@ function Shop(props) {
         <main className="container content">
             <h3>Shop {time}</h3>
                 <div className='content'>
-                    {isBasketShow && <BasketList order={order} handleBasketShow={handleBasketShow}/>}
+                    {isBasketShow && <BasketList 
+                        order={order}
+                        setOrder={setOrder}
+                        handleBasketShow={handleBasketShow}
+                        removeFromBasket={removeFromBasket}
+                        changeQuantityFromBasket={changeQuantityFromBasket}
+                    />}
                     {order? <Cart quantity={order.length} handleBasketShow={handleBasketShow}/> : null}
                     
                     <h4 className="bg-primary text-white text-center p-2">
