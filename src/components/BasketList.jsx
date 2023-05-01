@@ -16,7 +16,7 @@ function BasketList (props) {
             <li className="collection-item active blue darken-3">
                 Корзина {order.length? `содержит: ${order.length} товаров`: null}
                 <span className="secondary-content">
-                    <i class="material-icons" onClick={handleBasketShow}>close</i>
+                    <i className="material-icons" onClick={handleBasketShow}>close</i>
                 </span>
             </li>
             { order.length? order.map(item => 
@@ -25,9 +25,11 @@ function BasketList (props) {
             
             {order.length ?
             <>
+                <span className="clearBasket waves-effect waves-light btn blue darken-3 pulse" >Оформить заказа</span>
+            
                 <li className="collection-item active blue darken-1">Общая стоимость: {tPrice} руб.</li>
-                <span className="clearBasket waves-effect waves-light btn blue darken-3" onClick={() => setOrder([])}>Очистить корзину</span>
-            </>:
+                <span className="waves-effect waves-light btn-small grey darken-1" onClick={() => setOrder([])}>Очистить корзину</span>
+                </>:
                 null
             }
         </ul>

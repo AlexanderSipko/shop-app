@@ -103,3 +103,7 @@ i {
   float: right;
   margin: 0;
 }
+
+#toast-container {
+  top: 2rem !important;
+}

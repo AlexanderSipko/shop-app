@@ -1,9 +1,9 @@
 
-
+import Alert from './Alert'
 
 function GoodList(props) {
 
-    const {goods = [], add} = props
+    const {goods = [], add, alertName, setAlertName, closeAlert} = props
 
     if (goods.lenght) {
         return <h3>Nothing here</h3>
@@ -11,7 +11,13 @@ function GoodList(props) {
         return (
             <div className="goods">
                 {goods.map(good => 
-                    <GoodItems key={good.id} value={good} add={add}/>
+                    <GoodItems
+                        key={good.id}
+                        value={good}
+                        add={add}
+                        alertName={alertName}
+                        setAlertName={setAlertName}
+                        closeAlert={closeAlert}/>
                 )}
             </div>
         )
@@ -25,10 +31,11 @@ export default GoodList
 function GoodItems(props) {
 
     const {id, name, description, price, full_background} = props.value
-    const {add} = props
+    const {add, alertName, setAlertName, closeAlert} = props
 
     const addPosition = () => {
         add({id, name, description, price})
+        setAlertName(name)
     }
 
     return (
@@ -44,6 +51,8 @@ function GoodItems(props) {
                 <div className="card-action">
                     
                     <button className="btn blue" onClick={addPosition}>Купить</button>
+                    {alertName && <Alert name={alertName} closeAlert={closeAlert}/>}
+                    
                     <span className="right" style={{fontSize:'1.8rem'}} >{price} руб.</span>
                 </div>
         </div>

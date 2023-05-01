@@ -12,6 +12,7 @@ function Shop(props) {
     const {loading, setLoading} = useState(true);
     const [order, setOrder] = useState([]);
     const [isBasketShow, serIsBasketShow] = useState(false);
+    const [alertName, setAlertName] = useState('')
 
     useEffect(() => {
 
@@ -107,6 +108,10 @@ function Shop(props) {
         // ]) 
     }
 
+    const  closeAlert = () => {
+        setAlertName('')
+    } 
+
     const {
         time
     } = props
@@ -125,7 +130,12 @@ function Shop(props) {
                     
                     <h4 className="bg-primary text-white text-center p-2">
                     {!loading? (
-                        <GoodList goods={goods} add={addToBasket}/>
+                        <GoodList
+                            goods={goods}
+                            add={addToBasket}
+                            alertName={alertName}
+                            setAlertName={setAlertName}
+                            closeAlert={closeAlert}/>
                     ):(
                         <Preloader/>
                     )}
