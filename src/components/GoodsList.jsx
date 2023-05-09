@@ -1,23 +1,26 @@
 
 import Alert from './Alert'
+import { ShopContext } from '../context'
+import { useContext } from 'react'
 
-function GoodList(props) {
+function GoodList() {
+    const {value} = useContext(ShopContext);
+    // const {goods = [], add, alertName, setAlertName} = props
 
-    const {goods = [], add, alertName, setAlertName, closeAlert} = props
-
-    if (goods.lenght) {
+    if (value.goods.lenght) {
         return <h3>Nothing here</h3>
     } else {
         return (
             <div className="goods">
-                {goods.map(good => 
+                {value.goods.map(good => 
                     <GoodItems
                         key={good.id}
                         value={good}
-                        add={add}
-                        alertName={alertName}
-                        setAlertName={setAlertName}
-                        closeAlert={closeAlert}/>
+                        // add={value.addToBasket}
+                        // alertName={value.alertName}
+                        // setAlertName={value.setAlert}
+                        // closeAlert={closeAlert}
+                    />
                 )}
             </div>
         )
@@ -29,13 +32,14 @@ export default GoodList
 
 
 function GoodItems(props) {
+    const {value} = useContext(ShopContext);
 
     const {id, name, description, price, full_background} = props.value
-    const {add, alertName, setAlertName, closeAlert} = props
+    // const {add} = props
 
     const addPosition = () => {
-        add({id, name, description, price})
-        setAlertName(name)
+        value.addToBasket({id, name, description, price})
+        value.setAlert(name)
     }
 
     return (
@@ -51,7 +55,9 @@ function GoodItems(props) {
                 <div className="card-action">
                     
                     <button className="btn blue" onClick={addPosition}>Купить</button>
-                    {alertName && <Alert name={alertName} closeAlert={closeAlert}/>}
+                    {value.alertName && <Alert name={value.alertName}
+                    // closeAlert={closeAlert}
+                    />}
                     
                     <span className="right" style={{fontSize:'1.8rem'}} >{price} руб.</span>
                 </div>

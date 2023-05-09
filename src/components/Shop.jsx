@@ -1,148 +1,140 @@
 
-import {useState, useEffect} from 'react'
+import {useEffect, useContext} from 'react'
 import Preloader from './Preloads'
 import GoodList from './GoodsList'
 import { API_KEY, API_URL } from '../config'; 
 import Cart from './Cart'
 import BasketList from './BasketList'
+import { ShopContext } from '../context';
+
 
 function Shop(props) {
 
-    const [goods, setGoods] = useState([]);
-    const {loading, setLoading} = useState(true);
-    const [order, setOrder] = useState([]);
-    const [isBasketShow, serIsBasketShow] = useState(false);
-    const [alertName, setAlertName] = useState('')
+    const {value} = useContext(ShopContext);
+    // const [goods, setGoods] = useState([]);
+    // const {loading, setLoading} = useState(true);
+    // const [order, setOrder] = useState([]);
+    // const [isBasketShow, serIsBasketShow] = useState(false);
 
     useEffect(() => {
-
+        value.setIsLoading()
         const headers = {
             Authorization:API_KEY
         }
         fetch(API_URL, {headers:headers})
           .then(response => response.json())
           .then((result) => 
-            {
-                result.featured && setGoods(result.featured);
-            })
-          .catch(error => console.log('error', error));
-            
-    }, [setLoading])
-
-
-    const handleBasketShow = () => {
-        // управление состоянием показа корзины
-        serIsBasketShow(!isBasketShow)
-    } 
-
-    const headers = {
-        Authorization:API_KEY
-    }
-    fetch(API_URL, {headers:headers})
-      .then(response => response.json())
-      .then((result) => 
-        {
-            result.featured && setGoods(result.featured);
-        })
-      .catch(error => console.log('error', error));
-
-    const addToBasket = (elem) => {
-        const itemIndex = order.findIndex(orderItem => orderItem.id === elem.id)
-
-        if (itemIndex < 0) {
-            const newItem = {
-                ...elem,
-                quantity:1,
-            }
-            setOrder((order) => ([...order, newItem]))
-        } else {
-            const newOrder = order.map((orderItem, index) => {
-                if (index === itemIndex) {
-                    return {
-                        ...orderItem,
-                        quantity:orderItem.quantity+1
-                    }
-                } else {
-                    return orderItem;
-                }
-            }
+                result.featured && value.setGoods(result.featured),
+                value.setIsLoading()
             )
-            setOrder(newOrder)
-        }
-    }
+          .catch(error => console.log('error', error));
+          // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
-    const removeFromBasket = (idElem) => {
-        // убираем улемент из заказа
-        const newOrders = order.filter(item => item.id !== idElem)
-        setOrder(newOrders)
-    }
+    // const handleBasketShow = () => {
+    //     // управление состоянием показа корзины
+    //     serIsBasketShow(!isBasketShow)
+    // } 
 
-    const changeQuantityFromBasket = (idElem, plus=true) => {
-        // добавляем количество в заказе
-        const newOrdersIndex = order.findIndex(item => item.id === idElem)
+    // const headers = {
+    //     Authorization:API_KEY
+    // }
 
-        if (newOrdersIndex<0) {
-            return null
-        } else {
-            const NewOrderList = order.map((item, index) => {
-                if (index === newOrdersIndex) {
+    // fetch(API_URL, {headers:headers})
+    //   .then(response => response.json())
+    //   .then((result) => 
+    //     {
+    //         result.featured && value.setGoods(result.featured);
+    //     })
+    //   .catch(error => console.log('error', error));
 
-                    let newQuantity = item.quantity
-                    plus? newQuantity=newQuantity + 1: newQuantity=newQuantity - 1;
+    // const addToBasket = (elem) => {
+    //     const itemIndex = order.findIndex(orderItem => orderItem.id === elem.id)
+    //     if (itemIndex < 0) {
+    //         const newItem = {
+    //             ...elem,
+    //             quantity:1,
+    //         }
+    //         setOrder((order) => ([...order, newItem]))
+    //     } else {
+    //         const newOrder = order.map((orderItem, index) => {
+    //             if (index === itemIndex) {
+    //                 return {
+    //                     ...orderItem,
+    //                     quantity:orderItem.quantity+1
+    //                 }
+    //             } else {
+    //                 return orderItem;
+    //             }
+    //         }
+    //         )
+    //         setOrder(newOrder)
+    //     }
+    // }
 
-                    return {
-                        ...item,
-                        quantity:newQuantity
-                    }
-                } else {
-                    return item
-                }
-            })
-            setOrder(NewOrderList)
-        }
-        // let changeOrderItem = newOrders[0]
-        // changeOrderItem.quantity += 1
-        // console.log([
-        //     ...order,
-        //     changeOrderItem
-        // ]) 
-    }
+    // const removeFromBasket = (idElem) => {
+    //     // убираем элемент из заказа
+    //     const newOrders = order.filter(item => item.id !== idElem)
+    //     setOrder(newOrders)
+    // }
 
-    const  closeAlert = () => {
-        setAlertName('')
-    } 
+    // const changeQuantityFromBasket = (idElem, plus=true) => {
+    //     // добавляем количество в заказе
+    //     const newOrdersIndex = order.findIndex(item => item.id === idElem)
+
+    //     if (newOrdersIndex<0) {
+    //         return null
+    //     } else {
+    //         const NewOrderList = order.map((item, index) => {
+    //             if (index === newOrdersIndex) {
+
+    //                 let newQuantity = item.quantity
+    //                 plus? newQuantity=newQuantity + 1: newQuantity=newQuantity - 1;
+
+    //                 return {
+    //                     ...item,
+    //                     quantity:newQuantity
+    //                 }
+    //             } else {
+    //                 return item
+    //             }
+    //         })
+    //         setOrder(NewOrderList)
+    //     }
+    // }
 
     const {
         time
     } = props
     return (
+        //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
         <main className="container content">
-            <h3>Shop {time}</h3>
+            <h3>Shop {time} {value.example}</h3>
                 <div className='content'>
-                    {isBasketShow && <BasketList 
-                        order={order}
-                        setOrder={setOrder}
-                        handleBasketShow={handleBasketShow}
-                        removeFromBasket={removeFromBasket}
-                        changeQuantityFromBasket={changeQuantityFromBasket}
+                    {value.isBasketShow && <BasketList 
+                        // order={value.order}
+                        // // setOrder={setOrder}
+                        // handleBasketShow={value.handleBasketShow}
+                        // removeFromBasket={value.removeFromBasket}
+                        // changeQuantityFromBasket={value.changeQuantityFromBasket}
                     />}
-                    {order? <Cart quantity={order.length} handleBasketShow={handleBasketShow}/> : null}
+                    {value.order? <Cart
+                        // quantity={value.order.length}
+                        // handleBasketShow={value.handleBasketShow}
+                        /> : null}
                     
                     <h4 className="bg-primary text-white text-center p-2">
-                    {!loading? (
+                    {value.loading? (
                         <GoodList
-                            goods={goods}
-                            add={addToBasket}
-                            alertName={alertName}
-                            setAlertName={setAlertName}
-                            closeAlert={closeAlert}/>
+                            // goods={value.goods}
+                            // add={value.addToBasket}
+                        />
                     ):(
                         <Preloader/>
                     )}
                 </h4>
             </div>
         </main>
-        
     )
 }
 

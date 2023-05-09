@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import Shop from './components/Shop'
+import {ContextProvider} from './context'
 
 class App extends Component {
   constructor(props) {
@@ -18,11 +19,13 @@ class App extends Component {
 
   render () {
     return (
-      <div className="App">
-        <Shop
-          time={this.state.time}
-        />
-      </div>
+        <div className="App">
+          <ContextProvider>
+            <Shop
+                time={this.state.time}
+              />
+          </ContextProvider>
+        </div>
     );
   }
 }

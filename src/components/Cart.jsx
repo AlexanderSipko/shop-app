@@ -1,13 +1,15 @@
+import { useContext } from "react"
+import { ShopContext } from "../context"
 
+function Cart() {
+    const {value} = useContext(ShopContext);
 
-function Cart(props) {
-
-    const {quantity=0, handleBasketShow} = props
+    // const {quantity=0, handleBasketShow} = props
 
     return (
-        <div className="cart blue darken-1 white-text" onClick={handleBasketShow}>
+        <div className="cart blue darken-1 white-text" onClick={value.handleBasketShow}>
             <i className="material-icons">shopping_cart</i>
-            {quantity? <span className="cart--quantity">{quantity}</span>:null}
+            {value.order.length? <span className="cart--quantity">{value.order.length}</span>:null}
         </div>
     )
 } 
