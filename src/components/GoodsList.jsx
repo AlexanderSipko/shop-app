@@ -5,7 +5,6 @@ import { useContext } from 'react'
 
 function GoodList() {
     const {value} = useContext(ShopContext);
-    // const {goods = [], add, alertName, setAlertName} = props
 
     if (value.goods.lenght) {
         return <h3>Nothing here</h3>
@@ -16,10 +15,6 @@ function GoodList() {
                     <GoodItems
                         key={good.id}
                         value={good}
-                        // add={value.addToBasket}
-                        // alertName={value.alertName}
-                        // setAlertName={value.setAlert}
-                        // closeAlert={closeAlert}
                     />
                 )}
             </div>
@@ -35,7 +30,6 @@ function GoodItems(props) {
     const {value} = useContext(ShopContext);
 
     const {id, name, description, price, full_background} = props.value
-    // const {add} = props
 
     const addPosition = () => {
         value.addToBasket({id, name, description, price})
@@ -56,7 +50,6 @@ function GoodItems(props) {
                     
                     <button className="btn blue" onClick={addPosition}>Купить</button>
                     {value.alertName && <Alert name={value.alertName}
-                    // closeAlert={closeAlert}
                     />}
                     
                     <span className="right" style={{fontSize:'1.8rem'}} >{price} руб.</span>

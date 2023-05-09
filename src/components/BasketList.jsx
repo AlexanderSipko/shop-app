@@ -6,9 +6,6 @@ import { ShopContext } from '../context'
 function BasketList () {
 
     const {value} = useContext(ShopContext);
-    // const [totalPrice, setTotalPrice] = useState(0)
-    // const {order=[], handleBasketShow, removeFromBasket, changeQuantityFromBasket} = props
-
     const tPrice = value.order.reduce((totalPrice, item) => 
             {return totalPrice + item.quantity * item.price}, 0
         )
@@ -25,8 +22,6 @@ function BasketList () {
                 <BasketItem
                     key={item.id}
                     item={item}
-                    // removeFromBasket={value.removeFromBasket}
-                    // changeQuantityFromBasket={value.changeQuantityFromBasket}
                 />
             ): <li className="collection-item">Корзина пуста</li>}
             
